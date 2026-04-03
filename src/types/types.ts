@@ -1,5 +1,5 @@
 import { Task } from "../Models/Task";
-
+import { Request } from "express";
 export interface ITask {
     id?: number;
     title: string;
@@ -33,13 +33,14 @@ export interface IRegisterTime {
 export interface PadronizedResp {
     status: number;
     message: string;
-    data: any;
+    data?: any;
 }
 export interface AuthRequest extends Request {
     user?: {
         id: number;
         name: string;
         email: string;
+        role: 'user' | 'admin';
     };
 }
 export type TaskCreateDTO = {
@@ -63,4 +64,15 @@ export interface TaskUpdateDTO {
     title?: string;
     description?: string;
     status?: 'pending' | 'in_progress' | 'completed';
+}
+export interface TokenPayload {
+    id: number;
+    name: string;
+    email: string;
+    role: 'user' | 'admin';
+}
+export interface ErrorResponse {
+    status: number;
+    message: string;
+    details?: any;
 }

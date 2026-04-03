@@ -1,11 +1,17 @@
 import { PadronizedResp } from "../types/types";
 import { DataTypes } from 'sequelize';
 
-export const padronizedResp = (status: number, message: string, data?: any) =>  {
-    return {
+export const padronizedResp = (status: number, message: string, data?: any): PadronizedResp =>  {
+    const response = {
         status,
         message,
-        data: data || null
     } as PadronizedResp;
-}
+
+    if (data !== undefined) {
+        response.data = data;
+    }
+    return response;
+};
+
+
 

@@ -1,0 +1,15 @@
+import jsonwebtoken from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import { TokenPayload } from '../types/types';
+dotenv.config();
+
+
+export const generateToken = (payload: TokenPayload)  => {
+    return jsonwebtoken.sign(payload, process.env.JWT_SECRET || 'default_secret',
+        {
+            expiresIn: '1h',
+            algorithm: 'HS256'
+        }
+    );
+    
+}
