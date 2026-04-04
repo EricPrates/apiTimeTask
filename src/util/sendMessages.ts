@@ -1,6 +1,5 @@
-// constants/index.ts
+
 export const HTTP_STATUS = {
-  
     OK: 200,
     CREATED: 201,
     ACCEPTED: 202,
@@ -23,7 +22,8 @@ export const AUTH_ERRORS = {
     INVALID_TOKEN: 'Token inválido ou expirado',
     INSUFFICIENT_PRIVILEGES: 'Acesso negado: privilégios insuficientes',
     USER_NOT_FOUND: 'Usuário não encontrado',
-    INVALID_CREDENTIALS: 'Credenciais inválidas'
+    INVALID_CREDENTIALS: 'Credenciais inválidas',
+    FORBIDDEN: 'Acesso negado'
 } as const;
 
 export const USER_ERRORS = {
@@ -51,4 +51,4 @@ export const SERVER_ERRORS = {
     INTERNAL_SERVER_ERROR: 'Erro interno do servidor',
     SERVICE_UNAVAILABLE: 'Serviço indisponível',
     BAD_GATEWAY: 'Gateway ruim'
-}
+} as const;

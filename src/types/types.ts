@@ -1,5 +1,6 @@
 import { Task } from "../Models/Task";
 import { Request } from "express";
+import { json } from 'sequelize';
 export interface ITask {
     id?: number;
     title: string;
@@ -30,13 +31,20 @@ export interface IRegisterTime {
     updatedAt?: Date;
    
 } 
-export interface PadronizedResp {
+export interface BuildResponse {
     status: number;
     message: string;
     data?: any;
+
 }
+export interface AuthContext {
+    userId: number;
+    userName: string;
+    role: 'user' | 'admin';
+}
+
 export interface AuthRequest extends Request {
-    user?: {
+    user: {
         id: number;
         name: string;
         email: string;

@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-
+import {processToken } from '../apiTimeTask/src/auth/middleware/index';
 
 const app: express.Application = express();
 const corsOptions = {
@@ -8,12 +8,13 @@ const corsOptions = {
   
 };
 
-
+app.use();
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req: express.Request, res: express.Response) => {
+
   res.json({ message: 'Hello, World!' });
 });
 

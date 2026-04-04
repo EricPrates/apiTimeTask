@@ -8,8 +8,8 @@ import { validateID, verifyStringRequiredFields, validateTitle } from './util.Va
 export const TaskService = {
   async getTasksByUserId( repository: ITaskRepository, id: number): Promise<Task[]> {
     
-        const taskId = validateID(id);
-        const tasksByUserId = await repository.findTasksByUserId(taskId);
+   
+        const tasksByUserId = await repository.findTasksByUserId(id);
         if (!tasksByUserId || tasksByUserId.length === 0) {
             throw new Error('Nenhuma tarefa encontrada para o usuário');
         }

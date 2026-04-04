@@ -1,16 +1,7 @@
-import { PadronizedResp } from "../types/types";
+
 import { DataTypes } from 'sequelize';
 
-export function padronizedResp (status: number, message: string, data?: any) {
-    return {
-        status,
-        message,
-        data: data || null
-    } as PadronizedResp;
-}
-
-
-export function validateID(id: number | string) {
+export function validateID(id: number) {
     if (id === undefined || id === null) {
         throw new Error('O campo Id é obrigatório');
     }
