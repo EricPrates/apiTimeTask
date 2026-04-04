@@ -1,46 +1,34 @@
 import { Task } from '../Models/Task';
-import { TaskRepository } from '../repo/TaskRepository';
-import { ITaskRepository, TaskCreateDTO, TaskUpdateDTO } from '../types/types';
-
+import { ITaskRepository, ITaskService, TaskCreateDTO, TaskUpdateDTO } from '../types/types';
 import { validateID, verifyStringRequiredFields, validateTitle } from './util.ValidatorsService';
+import { AppError } from '../Models/appError';
 
-
-export const TaskService = {
-  async getTasksByUserId( repository: ITaskRepository, id: number): Promise<Task[]> {
-    
-        
-        const tasksByUserId = await repository.findTasksByUserId(id);
-        if (!tasksByUserId || tasksByUserId.length === 0) {
-            throw new Error('Nenhuma tarefa encontrada para o usuário');
+export const TaskService: ITaskService = {
+    async getTasksByUserId(repository: ITaskRepository, id: number): Promise<Task[]> {
+        const tasks = await repository.findTasksByUserId(id);
+        if (!tasks || tasks.length === 0) {
+            throw new AppError(404, 'Nenhuma tarefa encontrada para o usuário');
         }
-        return tasksByUserId;
+        return tasks;
     },
 
     async createTask(repository: ITaskRepository, data: TaskCreateDTO, userId: number): Promise<Task> {
         verifyStringRequiredFields(data, ['title', 'description', 'status']);
-
-        const titleTyped = data.title.toString();
-        validateTitle(titleTyped);
-
-        const newTask = await repository.createTask({ ...data, userId });
-        return newTask;
+        validateTitle(data.title.toString());
+        return await repository.createTask({ ...data, userId });
     },
-    async updateTask(repository: ITaskRepository, id: number , userId: number , data: TaskUpdateDTO): Promise<Task> {
+
+    async updateTask(repository: ITaskRepository, id: number, userId: number, data: TaskUpdateDTO): Promise<Task> {
         verifyStringRequiredFields({ id, userId }, ['id', 'userId']);
-
         verifyStringRequiredFields(data, ['title', 'description', 'status']);
-        if(Object.keys(data).length === 0) {
-            throw new Error('Nenhum campo para atualizar foi fornecido');
+        if (Object.keys(data).length === 0) {
+            throw new AppError(400, 'Nenhum campo para atualizar foi fornecido');
         }
-        const tytleTyped = data.title!.toString()
-        validateTitle(tytleTyped);
-
-        const taskUpdated = await repository.update(data, id, userId);
-
-        if(!taskUpdated) {
-            throw new Error('Tarefa não encontrada para o usuário');
+        validateTitle(data.title!.toString());
+        const updated = await repository.update(data, id, userId);
+        if (!updated) {
+            throw new AppError(404, 'Tarefa não encontrada para o usuário');
         }
-        return taskUpdated;
-
+        return updated;
     }
-}
+};

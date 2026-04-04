@@ -1,12 +1,12 @@
-import { Response } from 'express';
+import { Response, NextFunction } from 'express';
 import { ITaskRepository, ITaskService, AuthRequest, TaskCreateDTO, TaskResponseDTO, TaskUpdateDTO } from '../types/types';
 import { validateID } from '../services/util.ValidatorsService';
 import { Send } from '../util/sendHandler';
 import { getContext } from '../util/authStorage';
 
-export default function makeTaskController(service: ITaskService, repository: ITaskRepository) {
+export function makeTaskController(service: ITaskService, repository: ITaskRepository) {
     return {
-        async getTasksByUserId(_req: AuthRequest, res: Response) {
+        async getTasksByUserId(_req: AuthRequest, res: Response, next: NextFunction) {
             try {
                 const { id } = getContext() || {};
                 const userId = validateID(id!);
@@ -19,11 +19,11 @@ export default function makeTaskController(service: ITaskService, repository: IT
                 }));
                 Send.sendSuccess(res, 'Tarefas recuperadas com sucesso', tasksResponse);
             } catch (error) {
-                throw error;
+                next(error);
             }
         },
 
-        async createTask(req: AuthRequest, res: Response) {
+        async createTask(req: AuthRequest, res: Response, next: NextFunction) {
             try {
                 const { id } = getContext() || {};
                 const { title, description, status } = req.body;
@@ -37,11 +37,11 @@ export default function makeTaskController(service: ITaskService, repository: IT
                 };
                 Send.sendCreated(res, 'Tarefa criada com sucesso', taskResponse);
             } catch (error) {
-                throw error;
+                next(error);
             }
         },
 
-        async updateTask(req: AuthRequest, res: Response) {
+        async updateTask(req: AuthRequest, res: Response, next: NextFunction) {
             try {
                 const context = getContext();
                 const userIdValidated = validateID(context?.id!);
@@ -57,7 +57,7 @@ export default function makeTaskController(service: ITaskService, repository: IT
                 };
                 Send.sendSuccess(res, 'Tarefa atualizada com sucesso', taskResponse);
             } catch (error) {
-                throw error;
+                next(error);
             }
         }
     };
