@@ -1,5 +1,5 @@
-import { ErrorResponse } from '../types/types';
-import { HTTP_STATUS, SERVER_ERRORS } from './sendMessages';
+
+import { HTTP_STATUS } from './sendMessages';
 import { buildResponse } from './buildResponse';
 import { Response } from 'express';
 

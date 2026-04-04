@@ -1,15 +1,15 @@
 import express from 'express';
 import cors from 'cors';
-import {processToken } from '../apiTimeTask/src/auth/middleware/index';
 import { dinamicRoutes } from './src/routes/config.routes';
-
+import { errorHandler } from './src/auth/middleware/erroHandler';
+import { contextMiddleware } from './src/auth/middleware/context.middleware';
 const app: express.Application = express();
 const corsOptions = {
   origin: 'http://localhost:3000',
   
 };
 
-app.use();
+
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -18,10 +18,10 @@ app.get('/api', (req: express.Request, res: express.Response) => {
 
   res.json({ message: 'Hello, World!' });
 });
-app.post('/api/login', );
-app.post('/api/register', );
-app.use(processToken);
+
+app.use(contextMiddleware);
 app.use(dinamicRoutes);
+app.use(errorHandler)
 const PORT: number = process.env.PORT? parseInt(process.env.PORT) : 5000;
 
 (async () => {

@@ -1,6 +1,6 @@
 import { Task } from "../Models/Task";
 import { Request } from "express";
-import { json } from 'sequelize';
+;
 export interface ITask {
     id?: number;
     title: string;
@@ -18,7 +18,7 @@ export interface IUser {
     email: string;
     createdAt?: Date;
     updatedAt?: Date;
-    senha: String
+    senha: string
    
 }
 export interface IRegisterTime {
@@ -38,7 +38,7 @@ export interface BuildResponse {
 
 }
 export interface AuthContext {
-    userId: number;
+    id: number;
     userName: string;
     role: 'user' | 'admin';
 }
@@ -63,6 +63,12 @@ export type TaskResponseDTO = {
     status: 'pending' | 'in_progress' | 'completed';
    
 }
+export interface ITaskService {
+    getTasksByUserId(repository: ITaskRepository, id: number): Promise<Task[]>;
+    createTask(repository: ITaskRepository, data: TaskCreateDTO, userId: number): Promise<Task>;
+    updateTask(repository: ITaskRepository, id: number, userId: number, data: TaskUpdateDTO): Promise<Task>;
+}
+
 export interface ITaskRepository {
     findTasksByUserId(userId: number): Promise<Task[]>;
     createTask(data: ITask): Promise<Task>;
@@ -78,9 +84,4 @@ export interface TokenPayload {
     name: string;
     email: string;
     role: 'user' | 'admin';
-}
-export interface ErrorResponse {
-    status: number;
-    message: string;
-    details?: any;
 }

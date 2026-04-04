@@ -1,5 +1,5 @@
 import { BuildResponse } from '../types/types';
-import { DataTypes, json } from 'sequelize';
+
 
 export const buildResponse = (status: number, message: string, data?:any ): BuildResponse =>  {
     const response = {
@@ -10,7 +10,7 @@ export const buildResponse = (status: number, message: string, data?:any ): Buil
     if (data !== undefined) {
         response.data = data;
     }
-    return response; // Converter JSON
+    return response; 
 };
 
 

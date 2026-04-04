@@ -1,12 +1,11 @@
-import { NextFunction } from "express";
-import { AuthRequest, TokenPayload } from "../../types/types";
+import { NextFunction, Request } from "express";
 import { verifyToken } from "./verifyToken";
-import { AUTH_ERRORS } from "../../util/sendMessages";
 import { authStorage } from "../../util/authStorage";
-import { decode } from "jsonwebtoken";
+import { TokenPayload } from "../../types/types";
+import { Response } from "express-serve-static-core";
 
 
-export const contextMiddleware = (req: AuthRequest, res: Response, next: NextFunction) => {
+export async function contextMiddleware (req: Request, res: Response, next: NextFunction): Promise<void> {
     const authHeader = req.headers.authorization;
     let decoded : TokenPayload | null = null;
     if (authHeader) {

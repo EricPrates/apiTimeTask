@@ -1,5 +1,4 @@
 
-import { DataTypes } from 'sequelize';
 
 export function validateID(id: number) {
     if (id === undefined || id === null) {

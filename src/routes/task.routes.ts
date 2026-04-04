@@ -1,4 +1,13 @@
-import { Router } from "express";
+import express from 'express';
+import { taskController } from "../container";
+const router = express.Router();
 
-export const taskRouter = Router();
-app.use('/tasks', taskRouter);
+
+router.get('/tasks', taskController.getTasksByUserId);
+router.post('/tasks', taskController.createTask);
+router.put('/tasks/:id', taskController.updateTask);
+router.delete('/tasks/:id');
+
+export default (app: express.Application) => {
+  app.use('/auth', router);
+};

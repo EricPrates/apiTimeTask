@@ -4,7 +4,7 @@ import { RegisterTime } from "./RegisterTime";
 
 RegisterTime.belongsTo(User,{
     foreignKey:'userId',
-    as:'users'
+    as:'user'
 });
 
 User.hasMany(RegisterTime, {
@@ -17,7 +17,7 @@ User.hasMany(Task, {
 })
 Task.belongsTo(User, {
     foreignKey:'userId',
-    as:'users'
+    as:'user'
 });
 
 Task.hasMany(RegisterTime, {
@@ -26,5 +26,5 @@ Task.hasMany(RegisterTime, {
 });
 RegisterTime.belongsTo(Task, {
     foreignKey:'taskId',
-    as:'tasks'
+    as:'task'
 })

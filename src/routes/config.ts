@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { adminProcessToken, processToken } from "../auth/middleware";
+import { adminProcessToken } from "../auth/middleware";
 
 const adminRoutes = {
     DELETE: ['/users', '/tasks', '/users/:id'],
