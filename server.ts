@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import {processToken } from '../apiTimeTask/src/auth/middleware/index';
+import { dinamicRoutes } from './src/routes/config.routes';
 
 const app: express.Application = express();
 const corsOptions = {
@@ -13,11 +14,14 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req: express.Request, res: express.Response) => {
+app.get('/api', (req: express.Request, res: express.Response) => {
 
   res.json({ message: 'Hello, World!' });
 });
-
+app.post('/api/login', );
+app.post('/api/register', );
+app.use(processToken);
+app.use(dinamicRoutes);
 const PORT: number = process.env.PORT? parseInt(process.env.PORT) : 5000;
 
 (async () => {

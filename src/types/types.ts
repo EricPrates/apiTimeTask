@@ -44,7 +44,7 @@ export interface AuthContext {
 }
 
 export interface AuthRequest extends Request {
-    user: {
+    user?: {
         id: number;
         name: string;
         email: string;

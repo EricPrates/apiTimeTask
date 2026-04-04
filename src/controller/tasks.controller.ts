@@ -8,7 +8,7 @@ import { Task } from '../Models/Task';
 import { Send } from '../util/sendHandler';
 export async function getTasksByUserId(req: AuthRequest, res: Response) {
     try {
-        const { id } = req.user;
+        const { id } = req.user!;
         const userId = validateID(id);
         const tasks = await TaskService.getTasksByUserId(TaskRepository, userId);
         const tasksResponse: TaskResponseDTO[] = tasks.map(task => ({
@@ -34,7 +34,7 @@ export async function getTasksByUserId(req: AuthRequest, res: Response) {
 
 export async function createTask(req: AuthRequest, res: Response) {
     try {
-        const {id} = req.user;
+        const {id} = req.user!;
         const { title, description, status } = req.body;
 
         const taskDto: TaskCreateDTO = {
@@ -64,9 +64,9 @@ export async function createTask(req: AuthRequest, res: Response) {
 
 export async function updateTask(req: AuthRequest, res: Response) {
     try {
-        const { id } = req.user;
+        const { id } = req.user!;
         const { title, description, status  } = req.body;
-        const userIdvalidated = validateID(req.user.id);
+        const userIdvalidated = validateID(req.user!.id);
         const idValidated = validateID(id);
         const updateDTO: TaskUpdateDTO = {
             title,
