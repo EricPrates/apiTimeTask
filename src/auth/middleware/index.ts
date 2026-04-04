@@ -1,20 +1,19 @@
 
-import { NextFunction } from "express";
-import { AuthRequest, TokenPayload } from "../../types/types";
-import { Response } from "express";
+import { NextFunction, Response } from "express";
+import { TokenPayload } from "../../types/types";
 import { verifyToken } from "./verifyToken";
 import { AUTH_ERRORS } from "../../util/sendMessages";
 import { Send } from "../../util/sendHandler";
 import { authStorage } from "../../util/authStorage";
 
-export async function adminProcessToken(req: AuthRequest, res: Response, next: NextFunction): Promise<void | Response> {
+export async function adminProcessToken(_req: Response, res: Response, next: NextFunction): Promise<void | Response> {
     const context = authStorage.getStore();
     if (!context || context.role !== 'admin') {
         return Send.sendForbidden(res,);
     }
     return next();
 }
-export async function processToken(req: AuthRequest, res: Response, next: NextFunction): Promise<void | Response> {
+export async function processToken(req: { headers: { authorization?: string } }, res: Response, next: NextFunction): Promise<void | Response> {
 
     try {
         const authHeader = req.headers.authorization;
@@ -27,7 +26,6 @@ export async function processToken(req: AuthRequest, res: Response, next: NextFu
         }
         const token = partsAuthHeader[1];
         const decoded: TokenPayload = verifyToken(token);
-        req.user = decoded;
         return authStorage.run({
             id: decoded.id,
             userName: decoded.name,

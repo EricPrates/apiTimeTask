@@ -1,12 +1,12 @@
-import { Response, NextFunction } from 'express';
-import { ITaskRepository, ITaskService, AuthRequest, TaskCreateDTO, TaskResponseDTO, TaskUpdateDTO } from '../types/types';
+import { Response, NextFunction, Request } from 'express';
+import { ITaskRepository, ITaskService, TaskCreateDTO, TaskResponseDTO, TaskUpdateDTO } from '../types/types';
 import { validateID } from '../services/util.ValidatorsService';
 import { Send } from '../util/sendHandler';
 import { getContext } from '../util/authStorage';
 
 export function makeTaskController(service: ITaskService, repository: ITaskRepository) {
     return {
-        async getTasksByUserId(_req: AuthRequest, res: Response, next: NextFunction) {
+        async getTasksByUserId(_req: Request, res: Response, next: NextFunction) {
             try {
                 const { id } = getContext() || {};
                 const userId = validateID(id!);
@@ -23,7 +23,7 @@ export function makeTaskController(service: ITaskService, repository: ITaskRepos
             }
         },
 
-        async createTask(req: AuthRequest, res: Response, next: NextFunction) {
+        async createTask(req: Request, res: Response, next: NextFunction) {
             try {
                 const { id } = getContext() || {};
                 const { title, description, status } = req.body;
@@ -41,7 +41,7 @@ export function makeTaskController(service: ITaskService, repository: ITaskRepos
             }
         },
 
-        async updateTask(req: AuthRequest, res: Response, next: NextFunction) {
+        async updateTask(req: Request, res: Response, next: NextFunction) {
             try {
                 const context = getContext();
                 const userIdValidated = validateID(context?.id!);

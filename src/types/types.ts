@@ -1,6 +1,5 @@
 import { Task } from "../Models/Task";
-import { Request } from "express";
-;
+
 export interface ITask {
     id?: number;
     title: string;
@@ -43,14 +42,6 @@ export interface AuthContext {
     role: 'user' | 'admin';
 }
 
-export interface AuthRequest extends Request {
-    user?: {
-        id: number;
-        name: string;
-        email: string;
-        role: 'user' | 'admin';
-    };
-}
 export type TaskCreateDTO = {
     title: string;
     description: string;
