@@ -1,4 +1,4 @@
-import { AppError } from '../Models/appError';
+import { AppError } from '../Models/AppError';
 
 export function validateID(id: number) {
     if (id === undefined || id === null) {

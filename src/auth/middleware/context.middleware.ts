@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { verifyToken } from "./verifyToken";
 import { authStorage } from "../../util/authStorage";
-import { TokenPayload } from "../../types/types";
-import { AppError } from "../../Models/appError";
+import { AuthContext, TokenPayload } from "../../types/types";
+import { AppError } from "../../Models/AppError";
 
 
 export async function contextMiddleware(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -19,9 +19,7 @@ export async function contextMiddleware(req: Request, res: Response, next: NextF
                 }
             }
         }
-        authStorage.run(decoded as any, () => {
-            next();
-        });
+        authStorage.run(decoded as AuthContext, () => next());
     } catch (error) {
         next(error)
     }

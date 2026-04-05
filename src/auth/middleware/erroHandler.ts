@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { AppError } from "../../Models/appError";
+import { AppError } from "../../Models/AppError";
 import { Send } from "../../util/sendHandler";
 
 export function errorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
@@ -18,7 +18,7 @@ export function errorHandler(err: Error, req: Request, res: Response, next: Next
             case 422:
                 return Send.sendUnprocessableEntity(res, err.message);
             default:
-                return Send.sendInternalServerError(res, 'Erro interno do servidor');
+                return Send.send(res, err.statusCode, err.message);
         }
 
     }

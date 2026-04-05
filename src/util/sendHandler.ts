@@ -3,16 +3,21 @@ import { HTTP_STATUS } from './sendMessages';
 import { buildResponse } from './buildResponse';
 import { Response } from 'express';
 
+
 const sendHandler = (res: Response, status: number, message: string, data?: any): Response => {
     const resp = buildResponse(status, message, data);
     return res.status(resp.status).json(resp);
 };
 
 export const Send = {
-
+     send(res: Response,code: number, message?: string,  data?: any) {
+        return sendHandler(res, code, message || 'Sucesso', data);
+    },
     sendBadRequest(res: Response, message?: string, data?: any) {
         return sendHandler(res, HTTP_STATUS.BAD_REQUEST, message || 'Requisição inválida', data);
     },
+
+    
     sendUnauthorized(res: Response, message?: string, data?: any) {
         return sendHandler(res, HTTP_STATUS.UNAUTHORIZED, message || 'Não autorizado', data);
     },
@@ -52,4 +57,5 @@ export const Send = {
     sendServerError(res: Response, message?: string, data?: any) {
         return sendHandler(res, HTTP_STATUS.INTERNAL_SERVER_ERROR, message || 'Erro interno do servidor', data);
     }
+   
 }

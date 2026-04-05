@@ -38,7 +38,8 @@ export interface BuildResponse {
 }
 export interface AuthContext {
     id: number;
-    userName: string;
+    name: string;
+    email: string;
     role: 'user' | 'admin';
 }
 

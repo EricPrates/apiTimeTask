@@ -5,7 +5,7 @@ import { verifyToken } from "./verifyToken";
 import { AUTH_ERRORS } from "../../util/sendMessages";
 import { Send } from "../../util/sendHandler";
 import { authStorage } from "../../util/authStorage";
-import { AppError } from "../../Models/appError";
+import { AppError } from "../../Models/AppError";
 
 export async function adminProcessToken(_req: Request, res: Response, next: NextFunction): Promise<void | Response> {
     const context = authStorage.getStore();
@@ -29,7 +29,8 @@ export async function processToken(req: { headers: { authorization?: string } },
         const decoded: TokenPayload = verifyToken(token);
         return authStorage.run({
             id: decoded.id,
-            userName: decoded.name,
+            name: decoded.name,
+            email: decoded.email,
             role: decoded.role
         }, () => {
             next();

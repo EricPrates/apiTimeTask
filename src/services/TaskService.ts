@@ -1,7 +1,7 @@
 import { Task } from '../Models/Task';
 import { ITaskRepository, ITaskService, TaskCreateDTO, TaskUpdateDTO } from '../types/types';
-import { validateID, verifyStringRequiredFields, validateTitle } from './util.ValidatorsService';
-import { AppError } from '../Models/appError';
+import { verifyStringRequiredFields, validateTitle } from './util.ValidatorsService';
+import { AppError } from '../Models/AppError';
 
 export const TaskService: ITaskService = {
     async getTasksByUserId(repository: ITaskRepository, id: number): Promise<Task[]> {
