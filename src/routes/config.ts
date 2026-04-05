@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { adminProcessToken } from "../auth/middleware";
+import { adminProcessToken, processToken } from "../auth/middleware";
 
 const adminRoutes = {
     DELETE: ['/users', '/tasks', '/users/:id'],
@@ -18,5 +18,7 @@ export async function dinamicRoutes(req :Request, res: Response, next: NextFunct
     return new RegExp(`^${pattern}$`).test(`/${path}`)})){
         return adminProcessToken(req, res, next);
     }
-    next();
+
+     next();
+    
 }

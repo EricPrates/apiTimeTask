@@ -1,27 +1,28 @@
-import { NextFunction, Request } from "express";
+import { NextFunction, Request, Response } from "express";
 import { verifyToken } from "./verifyToken";
 import { authStorage } from "../../util/authStorage";
 import { TokenPayload } from "../../types/types";
-import { Response } from "express-serve-static-core";
+import { AppError } from "../../Models/appError";
 
 
-export async function contextMiddleware (req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function contextMiddleware(req: Request, res: Response, next: NextFunction): Promise<void> {
     const authHeader = req.headers.authorization;
-    let decoded : TokenPayload | null = null;
-    if (authHeader) {
-        const partsAuthHeader = authHeader.split(' ');
-        if (partsAuthHeader[0] === 'Bearer' && partsAuthHeader.length === 2) {
-            try {
+    let decoded: TokenPayload | null = null;
+    try {
+        if (authHeader) {
+            const partsAuthHeader = authHeader.split(' ');
+            if (partsAuthHeader[0] === 'Bearer' && partsAuthHeader.length === 2) {
                 const token = partsAuthHeader[1];
                 decoded = verifyToken(token);
-            } catch (error) {
-                console.error('Erro na autenticação:', error instanceof Error ? error.message : error);
-                decoded = null;
+                if (!decoded) {
+                    throw new AppError(401, 'Token inválido');
+                }
             }
         }
-               
+        authStorage.run(decoded as any, () => {
+            next();
+        });
+    } catch (error) {
+        next(error)
     }
-    authStorage.run( decoded as any, () => {
-    next();
-    });
 };

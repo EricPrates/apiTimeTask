@@ -1,17 +1,18 @@
 
-import { NextFunction, Response } from "express";
+import { NextFunction, Request, Response} from "express";
 import { TokenPayload } from "../../types/types";
 import { verifyToken } from "./verifyToken";
 import { AUTH_ERRORS } from "../../util/sendMessages";
 import { Send } from "../../util/sendHandler";
 import { authStorage } from "../../util/authStorage";
+import { AppError } from "../../Models/appError";
 
-export async function adminProcessToken(_req: Response, res: Response, next: NextFunction): Promise<void | Response> {
+export async function adminProcessToken(_req: Request, res: Response, next: NextFunction): Promise<void | Response> {
     const context = authStorage.getStore();
     if (!context || context.role !== 'admin') {
         return Send.sendForbidden(res,);
     }
-    return next();
+    next();
 }
 export async function processToken(req: { headers: { authorization?: string } }, res: Response, next: NextFunction): Promise<void | Response> {
 
@@ -22,7 +23,7 @@ export async function processToken(req: { headers: { authorization?: string } },
         }
         const partsAuthHeader = authHeader.split(' ');
         if (partsAuthHeader[0] !== 'Bearer' || partsAuthHeader.length !== 2) {
-            return Send.sendUnauthorized(res, AUTH_ERRORS.MALFORMED_TOKEN);
+            throw new AppError(401, AUTH_ERRORS.INVALID_TOKEN);
         }
         const token = partsAuthHeader[1];
         const decoded: TokenPayload = verifyToken(token);
@@ -35,13 +36,6 @@ export async function processToken(req: { headers: { authorization?: string } },
         });
 
     } catch (error) {
-        if (error instanceof Error) {
-            console.error('Erro na autenticação:', error.message);
-            if (error.message.includes('Token não fornecido') || error.message.includes('Token mal formatado')) {
-                Send.sendUnauthorized(res, error.message);
-            }
-
-        }
-        Send.sendInternalServerError(res, 'Erro interno do servidor');
+        next(error);
     }
 }

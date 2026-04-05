@@ -1,8 +1,8 @@
 import express from 'express';
 import cors from 'cors';
-import { dinamicRoutes } from './src/routes/config.routes';
 import { errorHandler } from './src/auth/middleware/erroHandler';
 import { contextMiddleware } from './src/auth/middleware/context.middleware';
+import { dinamicRoutes } from './src/routes/config';
 const app: express.Application = express();
 const corsOptions = {
   origin: 'http://localhost:3000',
