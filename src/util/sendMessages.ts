@@ -15,6 +15,25 @@ export const HTTP_STATUS = {
     BAD_GATEWAY: 502,
     SERVICE_UNAVAILABLE: 503
 } as const;
+export const STANDARD_MESSAGES = {
+    CREATED: 'Recurso criado com sucesso',
+    UPDATED: 'Recurso atualizado com sucesso',
+    DELETED: 'Recurso deletado com sucesso',
+    FETCHED: 'Dados recuperados com sucesso',
+    SUCCESS: 'Sucesso',
+    BAD_REQUEST: 'Requisição inválida',
+    UNAUTHORIZED: 'Não autorizado',
+    FORBIDDEN: 'Acesso negado',
+    NOT_FOUND: 'Recurso não encontrado',
+    CONFLICT: 'Conflito no recurso',
+    UNPROCESSABLE_ENTITY: 'Entidade não processável',
+    INTERNAL_SERVER_ERROR: 'Erro interno do servidor',
+    BAD_GATEWAY: 'Gateway ruim',
+    SERVICE_UNAVAILABLE: 'Serviço indisponível',
+    NO_CONTENT: 'Sem conteúdo',
+    ACCEPTED: 'Requisição aceita',
+
+} as const;
 
 export const AUTH_ERRORS = {
     NO_TOKEN: 'Token não fornecido',
