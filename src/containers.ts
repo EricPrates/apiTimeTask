@@ -1,10 +1,19 @@
+// composition.ts ou app.ts
+
 import { TaskRepository } from './repo/TaskRepository';
-import { TaskService } from './services/TaskService';
-import { makeTaskController } from './controller/tasks.controller';
 import { UserRepository } from './repo/UserRepository';
-import { UserService } from './services/UserService';
+import { makeTaskService } from './services/TaskService';
+import { makeUserService } from './services/UserService';
+import { makeTaskController } from './controller/tasks.controller';
+import { makeUserController } from './controller/user.controller';
 
 
-export const taskController = makeTaskController(TaskService, TaskRepository);
-export const authController = makeAuthController(UserService, UserRepository);
-export const registerTimeController = makeRegisterTimeController(RegisterTimeService, RegisterTimeRepository);
+const taskRepository = TaskRepository;
+const userRepository = UserRepository;
+
+
+const taskService = makeTaskService(taskRepository);
+const userService = makeUserService(userRepository);
+
+export const taskController = makeTaskController(taskService);  // ← só service
+export const userController = makeUserController(userService);  // ← só service

@@ -10,31 +10,31 @@ const sendHandler = (res: Response, status: number, message: string, data?: any)
 };
 
 export const Send = {
-     send(res: Response, code: number, message?: string,  data?: any) {
-        return sendHandler(res, code, message || 'Sucesso', data);
+     send(res: Response, code: number, message: string, data?: any) {
+        return sendHandler(res, code, message, data);
     },
-    sendBadRequest(res: Response, message?: string, data?: any) {
-        return sendHandler(res, HTTP_STATUS.BAD_REQUEST, message || STANDARD_MESSAGES.BAD_REQUEST, data);
+    sendBadRequest(res: Response, message?: string) {
+        return sendHandler(res, HTTP_STATUS.BAD_REQUEST, message || STANDARD_MESSAGES.BAD_REQUEST);
     },
 
 
-    sendUnauthorized(res: Response, message?: string, data?: any) {
-        return sendHandler(res, HTTP_STATUS.UNAUTHORIZED, message || STANDARD_MESSAGES.UNAUTHORIZED, data);
+    sendUnauthorized(res: Response, message?: string) {
+        return sendHandler(res, HTTP_STATUS.UNAUTHORIZED, message || STANDARD_MESSAGES.UNAUTHORIZED);
     },
-    sendForbidden(res: Response, message?: string, data?: any) {
-        return sendHandler(res, HTTP_STATUS.FORBIDDEN, message || STANDARD_MESSAGES.FORBIDDEN, data);
+    sendForbidden(res: Response, message?: string) {
+        return sendHandler(res, HTTP_STATUS.FORBIDDEN, message || STANDARD_MESSAGES.FORBIDDEN);
     },
-    sendNotFound(res: Response, message?: string, data?: any) {
-        return sendHandler(res, HTTP_STATUS.NOT_FOUND, message || STANDARD_MESSAGES.NOT_FOUND, data);
+    sendNotFound(res: Response, message?: string) {
+        return sendHandler(res, HTTP_STATUS.NOT_FOUND, message || STANDARD_MESSAGES.NOT_FOUND);
     },
-    sendInternalServerError(res: Response, message?: string, data?: any) {
-        return sendHandler(res, HTTP_STATUS.INTERNAL_SERVER_ERROR, message || STANDARD_MESSAGES.INTERNAL_SERVER_ERROR, data);
+    sendInternalServerError(res: Response, message?: string) {
+        return sendHandler(res, HTTP_STATUS.INTERNAL_SERVER_ERROR, message || STANDARD_MESSAGES.INTERNAL_SERVER_ERROR);
     },
-    sendConflict(res: Response, message?: string, data?: any) {
-        return sendHandler(res, HTTP_STATUS.CONFLICT, message || STANDARD_MESSAGES.CONFLICT, data);
+    sendConflict(res: Response, message?: string) {
+        return sendHandler(res, HTTP_STATUS.CONFLICT, message || STANDARD_MESSAGES.CONFLICT);
     },
-    sendUnprocessableEntity(res: Response, message?: string, data?: any) {
-        return sendHandler(res, HTTP_STATUS.UNPROCESSABLE_ENTITY, message || STANDARD_MESSAGES.UNPROCESSABLE_ENTITY, data);
+    sendUnprocessableEntity(res: Response, message?: string) {
+        return sendHandler(res, HTTP_STATUS.UNPROCESSABLE_ENTITY, message || STANDARD_MESSAGES.UNPROCESSABLE_ENTITY);
     },
     sendSuccess(res: Response, message?: string, data?: any) {
         return sendHandler(res, HTTP_STATUS.OK, message || STANDARD_MESSAGES.SUCCESS, data);
