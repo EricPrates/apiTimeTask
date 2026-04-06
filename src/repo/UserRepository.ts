@@ -1,5 +1,5 @@
-import { User } from "../Models/User";
-import { IUser, IUserRepository } from "../types/types";
+import { IUserRepository, CreateUserDTO } from '../types/types';
+import { User } from '../Models/User';
 
 export const UserRepository: IUserRepository = {
     async findById(id: number): Promise<User | null> {
@@ -8,7 +8,8 @@ export const UserRepository: IUserRepository = {
     async findUserByEmail(email: string): Promise<User | null> {
         return await User.findOne({ where: { email } });
     },
-    async createUser(data: IUser): Promise<void> {
-        await User.create(data);
+    async createUser(data: CreateUserDTO): Promise<User> {
+        const user = await User.create(data);
+        return user;
     }
 }

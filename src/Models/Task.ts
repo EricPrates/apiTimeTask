@@ -1,11 +1,9 @@
 import { Model, DataTypes, Optional } from 'sequelize';
 import sequelize from '../database/database';
-import { ITask } from '../types/types';
 import { User } from './User';
 
-type TaskOptionalAttributes = Optional<ITask, 'id' | 'createdAt' | 'updatedAt' | 'status'>;
 
-export class Task extends Model<ITask, TaskOptionalAttributes> implements ITask {
+export class Task extends Model {
     public id!: number;
     public title!: string;
     public description!: string;

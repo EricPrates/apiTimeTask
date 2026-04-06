@@ -1,40 +1,77 @@
-import { Task } from "../Models/Task"
-export interface ITask {
-    id?: number;
-    title: string;
-    description: string;
-    status: 'pending' | 'in_progress' | 'completed';
-    createdAt?: Date;
-    updatedAt?: Date;
-    userId? : number;
-  
-}
+// types/types.ts
+import { User } from "../Models/User";
+import { Task } from "../Models/Task";
+import { RegisterTime } from "../Models/RegisterTime";
 
-export interface IUser {
+
+export type CreateUserDTO = {
+    name: string;
+    email: string;
+    password: string;  
+    role?: 'user' | 'admin';
+}
+export type LoginDTO = {
+    email: string;
+    password: string;
+};
+
+export type UserResponseDTO = {
     id?: number;
     name: string;
     email: string;
-    createdAt?: Date;
-    updatedAt?: Date;
-    senha: string
-   
+    role: 'user' | 'admin';   
 }
-export interface IRegisterTime {
-    id?: number;
-    userId: number;
-    taskId: number;
-    startTime: Date;
-    endTime: Date;
-    createdAt?: Date;
-    updatedAt?: Date;
-   
-} 
+export type CreateTaskDTO = {
+    title: string;
+    description?: string;
+    status?: 'pending' | 'in_progress' | 'completed';
+}
+
+export type UpdateTaskDTO = {
+    title?: string;
+    description?: string;
+    status?: 'pending' | 'in_progress' | 'completed';
+}
+
+export type TaskResponseDTO = {
+    id: number;
+    title: string;
+    description: string;
+    status: 'pending' | 'in_progress' | 'completed';
+}
+
+// ========== Repository Interfaces ==========
+export interface IUserRepository {
+    findById(id: number): Promise<User | null>;
+    findUserByEmail(email: string): Promise<User | null>;
+    createUser(data: CreateUserDTO): Promise<User>;
+}
+
+export interface ITaskRepository {
+    findTasksByUserId(userId: number): Promise<Task[]>;
+    createTask(data: CreateTaskDTO & { userId: number }): Promise<Task>;
+    updateTask(id: number, userId: number, data: UpdateTaskDTO): Promise<Task | null>;
+}
+
+// ========== Service Interfaces ==========
+export interface IUserService {
+    register(data: CreateUserDTO): Promise<UserResponseDTO>;
+    login(data: LoginDTO): Promise<{ token: string; user: UserResponseDTO }>;
+}
+
+export interface ITaskService {
+    getTasksByUserId(userId: number): Promise<TaskResponseDTO[]>;
+    createTask(data: CreateTaskDTO, userId: number): Promise<TaskResponseDTO>;
+    updateTask(id: number, userId: number, data: UpdateTaskDTO): Promise<TaskResponseDTO | null>;
+}
+
+// ========== Utilitários ==========
 export interface BuildResponse {
     status: number;
     message: string;
     data?: any;
-
 }
+
 export interface AuthContext {
     id: number;
     name: string;
@@ -42,48 +79,9 @@ export interface AuthContext {
     role: 'user' | 'admin';
 }
 
-export type TaskCreateDTO = {
-    title: string;
-    description: string;
-    status: 'pending' | 'in_progress' | 'completed';
-}
-export type TaskResponseDTO = {
-    id: number;
-    title: string;
-    description: string;
-    status: 'pending' | 'in_progress' | 'completed';
-   
-}
-export interface ITaskService {
-    getTasksByUserId(id: number): Promise<Task[]>;
-    createTask(data: TaskCreateDTO, userId: number): Promise<Task>;
-    updateTask(id: number, userId: number, data: TaskUpdateDTO): Promise<Task | null>;
-}
-
-export interface ITaskRepository {
-    findTasksByUserId(userId: number): Promise<Task[]>;
-    createTask(data: ITask): Promise<Task>;
-    update(data: TaskUpdateDTO, id: number, userId: number): Promise<Task | null>;
-    
-}
-export interface TaskUpdateDTO {
-    title?: string;
-    description?: string;
-    status?: 'pending' | 'in_progress' | 'completed';
-}
 export interface TokenPayload {
     id: number;
     name: string;
     email: string;
     role: 'user' | 'admin';
 }
-export interface IUserService {
-    register(data: Omit<IUser, 'id' | 'createdAt' | 'updatedAt'>): Promise<void>;
-    login(email: string, senha: string): Promise<string>;
-}
-export interface IUserRepository {
-    findById(id: number): Promise<IUser | null>;
-    findUserByEmail(email: string): Promise<IUser | null>;
-    createUser(data: IUser): Promise<void>;
-}
-

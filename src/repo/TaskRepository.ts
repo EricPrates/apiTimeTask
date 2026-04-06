@@ -1,6 +1,6 @@
-import { promiseHooks } from "node:v8";
+
 import { Task } from "../Models/Task";
-import { ITaskRepository, TaskCreateDTO, TaskUpdateDTO } from '../types/types';
+import { ITaskRepository, CreateTaskDTO, UpdateTaskDTO } from '../types/types';
 
 export const TaskRepository : ITaskRepository = {
     async findTasksByUserId(userId: number) {
@@ -9,11 +9,11 @@ export const TaskRepository : ITaskRepository = {
             order: [['createdAt', 'DESC']]
         });
     },
-    async createTask(data: TaskCreateDTO) {
+    async createTask(data: CreateTaskDTO) {
         const newTask = await Task.create(data);
         return newTask;
     },
-    async update(data: TaskUpdateDTO, taskId: number, userId: number) {
+    async updateTask(taskId: number, userId: number, data: UpdateTaskDTO) {
         const [affectedCount] = await Task.update(data, {
             where: { id: taskId, userId },
         });

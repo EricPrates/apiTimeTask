@@ -1,5 +1,5 @@
 import { Response, NextFunction, Request } from 'express';
-import { ITaskService, TaskCreateDTO, TaskResponseDTO, TaskUpdateDTO } from '../types/types';
+import { ITaskService, TaskResponseDTO, CreateTaskDTO, UpdateTaskDTO } from '../types/types';
 import { validateID } from '../services/util.ValidatorsService';
 import { Send } from '../util/sendHandler';
 import { getContext } from '../util/authStorage';
@@ -29,7 +29,7 @@ export function makeTaskController(service: ITaskService) {
             try {
                 const { id } = getContext() || {};
                 const { title, description, status } = req.body;
-                const taskDto: TaskCreateDTO = { title, description, status };
+                const taskDto: CreateTaskDTO = { title, description, status };
                 const newTask = await service.createTask(taskDto, id!);
                 const taskResponse: TaskResponseDTO = {
                     id: newTask.id,
@@ -49,7 +49,7 @@ export function makeTaskController(service: ITaskService) {
                 const userIdValidated = validateID(context?.id!);
                 const taskId = validateID(parseInt(req.params['id'] as string));
                 const { title, description, status } = req.body;
-                const updateDTO: TaskUpdateDTO = { title, description, status };
+                const updateDTO: UpdateTaskDTO = { title, description, status };
                 const updatedTask = await service.updateTask(taskId, userIdValidated, updateDTO);
                 if (!updatedTask) {
                     throw new AppError(HTTP_STATUS.NOT_FOUND, 'Tarefa não encontrada para o usuário');

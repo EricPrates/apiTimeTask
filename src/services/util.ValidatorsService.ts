@@ -28,3 +28,20 @@ export function verifyStringRequiredFields(data: Record<string, any>, args: stri
     }
     return data;
 }
+export function verifyEmail(email: string) {
+    verifyStringRequiredFields({ email }, ['email']);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        throw new AppError(400, 'Email inválido');
+    }
+}
+export function verifyPassword(password: string) {
+    verifyStringRequiredFields({ password }, ['password']);
+    if (password.length < 6) {
+        throw new AppError(400, 'A senha deve conter no mínimo 6 caracteres');
+    }
+    if (password.length > 255) {
+        throw new AppError(400, 'A senha deve conter no máximo 255 caracteres');
+    }
+}
+

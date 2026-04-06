@@ -1,16 +1,17 @@
 import { NextFunction } from "express";
 import { Response, Request } from "express";
-import { IUserService } from "../types/types";
+import { IUserService, CreateUserDTO } from "../types/types";
 import { Send } from "../util/sendHandler";
+
 
 export function makeUserController(service:IUserService) {
     return {
         async register(req: Request, res: Response, next: NextFunction) {
             try {
-                const { name, email, senha } = req.body;
-                const userData = { name, email, senha };
-                const newUser = await service.register(userData);
-                Send.sendCreated(res, 'Usuário registrado com sucesso', newUser);
+                const { name, email, password } = req.body;
+                const userData : CreateUserDTO = { name, email, password, role: 'user' };
+                await service.register(userData);
+                Send.sendCreated(res, 'Usuário registrado com sucesso');
             } catch (error) {
                 next(error);
             }
@@ -18,8 +19,10 @@ export function makeUserController(service:IUserService) {
 
         async login(req: Request, res: Response, next: NextFunction) {
             try {
-                const { email, senha } = req.body;
-                const token = await service.login(email, senha);
+        
+                const { email, password } = req.body;
+                const userDto : CreateUserDTO = { name: '', email, password };
+                const token = await service.login(userDto);
                 Send.send(res, 200, 'Login bem-sucedido', { token });
             } catch (error) {
                 next(error);
