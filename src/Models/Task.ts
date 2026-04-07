@@ -1,4 +1,4 @@
-import { Model, DataTypes, Optional } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 import sequelize from '../database/database';
 import { User } from './User';
 
@@ -46,9 +46,16 @@ Task.init({
     userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+            model: 'users',
+            key: 'id'
+        }
     }
 }, {
     sequelize,
     modelName: 'Task',
     tableName: 'tasks',
 });
+
+User.hasMany(Task, { foreignKey: 'userId', as: 'tasks' });
+Task.belongsTo(User, { foreignKey: 'userId', as: 'user' });

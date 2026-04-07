@@ -1,10 +1,10 @@
 import jsonwebtoken from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import { TokenPayload } from '../types/util.types';
+import { AuthContext} from '../types/util.types';
 dotenv.config();
 
 
-export const generateToken = (payload: TokenPayload)  => {
+export const generateToken = (payload: AuthContext)  => {
     return jsonwebtoken.sign(payload, process.env.JWT_SECRET || 'default_secret',
         {
             expiresIn: '1h',

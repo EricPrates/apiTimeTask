@@ -1,5 +1,6 @@
 import { Response, NextFunction, Request } from 'express';
-import { ITaskService, TaskResponseDTO, CreateTaskDTO, UpdateTaskDTO } from '../types/util.types';
+import { ITaskService } from '../types/function.types';
+import { CreateTaskDTO, TaskResponseDTO, UpdateTaskDTO } from '../types/task.types';
 import { validateID } from '../services/util.ValidatorsService';
 import { Send } from '../util/sendHandler';
 import { getContext } from '../util/authStorage';

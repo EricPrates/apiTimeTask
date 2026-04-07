@@ -3,6 +3,7 @@ import { AppError } from "../../Models/AppError";
 import { Send } from "../../util/sendHandler";
 
 export function errorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
+    
     if (err instanceof AppError) {
         switch (err.statusCode) {
             case 400:
@@ -20,7 +21,6 @@ export function errorHandler(err: Error, req: Request, res: Response, next: Next
             default:
                 return Send.send(res, err.statusCode, err.message);
         }
-
     }
-    Send.sendInternalServerError(res, 'Erro interno do servidor');
+    return Send.sendInternalServerError(res, 'Erro interno do servidor');
 }

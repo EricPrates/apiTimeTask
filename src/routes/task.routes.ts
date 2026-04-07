@@ -1,9 +1,13 @@
 import express from 'express';
 import { taskController } from "../containers";
+import { Application } from 'express';
 const router = express.Router();
-router.get('/tasks', taskController.getTasksByUserId);
-router.post('/tasks', taskController.createTask);
-router.put('/tasks/:id', taskController.updateTask);
-router.delete('/tasks/:id');
+router.get('/', taskController.getTasksByUserId);
+router.post('/', taskController.createTask);
+router.put('/:id', taskController.updateTask);
 
-export default router;
+
+
+export default function registerTaskRoutes(app: Application) {
+    app.use('/tasks', router);
+}

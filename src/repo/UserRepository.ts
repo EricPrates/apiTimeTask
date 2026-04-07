@@ -1,5 +1,7 @@
-import { IUserRepository, CreateUserDTO } from '../types/util.types';
 import { User } from '../Models/User';
+import { IUserRepository } from "../types/function.types";
+import { CreateUserDTO } from "../types/user.types";
+
 
 export const UserRepository: IUserRepository = {
     async findById(id: number): Promise<User | null> {

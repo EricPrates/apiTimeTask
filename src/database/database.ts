@@ -3,7 +3,7 @@ import {Sequelize} from 'sequelize';
 
 const sequelize = new Sequelize( {
     dialect: 'sqlite',
-    storage: '../../db/TimeSheet.db',
+    storage: './db/Timesheet.db',
     logging: true, 
 }
 );

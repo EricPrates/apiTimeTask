@@ -1,6 +1,7 @@
 import { NextFunction } from "express";
 import { Response, Request } from "express";
-import { IUserService, CreateUserDTO } from "../types/util.types";
+import { IUserService } from "../types/function.types";
+import { CreateUserDTO } from "../types/user.types";
 import { Send } from "../util/sendHandler";
 
 
@@ -10,8 +11,8 @@ export function makeUserController(service:IUserService) {
             try {
                 const { name, email, password } = req.body;
                 const userData : CreateUserDTO = { name, email, password, role: 'user' };
-                await service.register(userData);
-                Send.sendCreated(res, 'Usuário registrado com sucesso');
+                const registeredUser = await service.register(userData);
+                return Send.sendCreated(res, 'Usuário registrado com sucesso', registeredUser);
             } catch (error) {
                 next(error);
             }
@@ -21,9 +22,12 @@ export function makeUserController(service:IUserService) {
             try {
         
                 const { email, password } = req.body;
+                if (!email || !password) {
+                    return Send.sendBadRequest(res, 'Email e senha são obrigatórios');
+                }
                 const userDto : CreateUserDTO = { name: '', email, password };
-                const token = await service.login(userDto);
-                Send.send(res, 200, 'Login bem-sucedido', { token });
+                const user = await service.login(userDto);
+                 return Send.send(res, 200, 'Login bem-sucedido' , user);
             } catch (error) {
                 next(error);
             }

@@ -1,12 +1,12 @@
 import jsonwebtoken from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import { TokenPayload } from '../../types/util.types';
+import { AuthContext } from '../../types/util.types';
 dotenv.config();
 
-export const verifyToken  = (token: string): TokenPayload => {
+export const verifyToken  = (token: string): AuthContext => {
     try {
         const decoded = jsonwebtoken.verify(token, process.env.JWT_SECRET || 'default_secret');
-        return decoded as TokenPayload;
+        return decoded as AuthContext;
     } catch (error) {
         throw new Error('Token inválido');
     }

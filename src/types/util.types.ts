@@ -11,10 +11,3 @@ export interface AuthContext {
     email: string;
     role: 'user' | 'admin';
 }
-
-export interface TokenPayload {
-    id: number;
-    name: string;
-    email: string;
-    role: 'user' | 'admin';
-}
