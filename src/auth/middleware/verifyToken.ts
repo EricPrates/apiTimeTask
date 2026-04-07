@@ -1,6 +1,6 @@
 import jsonwebtoken from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import { TokenPayload } from '../../types/types';
+import { TokenPayload } from '../../types/util.types';
 dotenv.config();
 
 export const verifyToken  = (token: string): TokenPayload => {

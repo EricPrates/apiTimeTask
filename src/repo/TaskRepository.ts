@@ -1,6 +1,6 @@
 
 import { Task } from "../Models/Task";
-import { ITaskRepository, CreateTaskDTO, UpdateTaskDTO } from '../types/types';
+import { ITaskRepository, CreateTaskDTO, UpdateTaskDTO } from '../types/util.types';
 
 export const TaskRepository : ITaskRepository = {
     async findTasksByUserId(userId: number) {

@@ -1,12 +1,11 @@
 
 import { NextFunction, Request, Response} from "express";
-import { TokenPayload } from "../../types/types";
 import { verifyToken } from "./verifyToken";
 import { AUTH_ERRORS } from "../../util/sendMessages";
 import { Send } from "../../util/sendHandler";
 import { authStorage } from "../../util/authStorage";
 import { AppError } from "../../Models/AppError";
-
+import { AuthContext } from "../../types/util.types";
 export async function adminProcessToken(_req: Request, res: Response, next: NextFunction): Promise<void | Response> {
     const context = authStorage.getStore();
     if (!context || context.role !== 'admin') {
@@ -26,7 +25,7 @@ export async function processToken(req: { headers: { authorization?: string } },
             throw new AppError(401, AUTH_ERRORS.INVALID_TOKEN);
         }
         const token = partsAuthHeader[1];
-        const decoded: TokenPayload = verifyToken(token);
+        const decoded: AuthContext = verifyToken(token);
         return authStorage.run({
             id: decoded.id,
             name: decoded.name,

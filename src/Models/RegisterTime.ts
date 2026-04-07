@@ -1,6 +1,6 @@
 import sequelize from '../database/database';
 import {Model, DataTypes, Optional} from 'sequelize';
-import { IRegisterTime } from '../types/types';
+import { IRegisterTime } from '../types/util.types';
 
  type RegisterTimeOptionalAttributes = Optional<IRegisterTime, 'id' | 'createdAt' | 'updatedAt'>;
 

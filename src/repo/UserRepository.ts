@@ -1,4 +1,4 @@
-import { IUserRepository, CreateUserDTO } from '../types/types';
+import { IUserRepository, CreateUserDTO } from '../types/util.types';
 import { User } from '../Models/User';
 
 export const UserRepository: IUserRepository = {
@@ -13,3 +13,4 @@ export const UserRepository: IUserRepository = {
         return user;
     }
 }
+  

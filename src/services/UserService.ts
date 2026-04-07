@@ -1,8 +1,10 @@
 
 import bcrypt from 'bcrypt';
-import { IUserRepository,  UserResponseDTO, CreateUserDTO, TokenPayload } from '../types/types';
 import { verifyEmail, verifyPassword } from './util.ValidatorsService';
 import { generateToken } from '../auth/generateToken';
+import { CreateUserDTO, UserResponseDTO } from '../types/user.types';
+import { IUserRepository } from '../types/function.types';
+import { AuthContext } from '../types/util.types';
 
 export const makeUserService = (repository: IUserRepository) => {
     return {
@@ -38,7 +40,7 @@ export const makeUserService = (repository: IUserRepository) => {
                 throw new Error('Credenciais Inválidas');
             }
            
-            const payload = { name: user.name, id: user.id, email: user.email, role: user.role } as TokenPayload;
+            const payload = { name: user.name, id: user.id, email: user.email, role: user.role } as AuthContext;
             const token = generateToken(payload);
 
             return {

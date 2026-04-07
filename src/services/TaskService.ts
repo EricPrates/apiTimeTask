@@ -1,5 +1,5 @@
 import { Task } from '../Models/Task';
-import { ITaskRepository, CreateTaskDTO, UpdateTaskDTO } from '../types/types';
+import { ITaskRepository, CreateTaskDTO, UpdateTaskDTO } from '../types/util.types';
 import { verifyStringRequiredFields, validateTitle } from './util.ValidatorsService';
 import { AppError } from '../Models/AppError';
 import { TASK_ERRORS, HTTP_STATUS } from '../util/sendMessages';

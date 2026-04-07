@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import { verifyToken } from "./verifyToken";
 import { authStorage } from "../../util/authStorage";
-import { AuthContext, TokenPayload } from "../../types/types";
+import { AuthContext } from "../../types/util.types";
 import { AppError } from "../../Models/AppError";
 
 
 export async function contextMiddleware(req: Request, res: Response, next: NextFunction): Promise<void> {
     const authHeader = req.headers.authorization;
-    let decoded: TokenPayload | null = null;
+    let decoded: AuthContext | null = null;
     try {
         if (authHeader) {
             const partsAuthHeader = authHeader.split(' ');

@@ -1,6 +1,6 @@
 import { NextFunction } from "express";
 import { Response, Request } from "express";
-import { IUserService, CreateUserDTO } from "../types/types";
+import { IUserService, CreateUserDTO } from "../types/util.types";
 import { Send } from "../util/sendHandler";
 
 

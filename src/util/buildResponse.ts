@@ -1,4 +1,4 @@
-import { BuildResponse } from '../types/types';
+import { BuildResponse } from '../types/util.types';
 
 
 export const buildResponse = (status: number, message: string, data?:any ): BuildResponse =>  {
