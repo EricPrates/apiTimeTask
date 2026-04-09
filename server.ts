@@ -40,6 +40,7 @@ const PORT: number = process.env.PORT? parseInt(process.env.PORT) : 5005;
   try {
     await sequelize.sync({ alter: true });
     app.listen(PORT, () => {
+      
     });
   } catch (error) {
   }

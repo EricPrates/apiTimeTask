@@ -18,6 +18,10 @@ export function errorHandler(err: Error, req: Request, res: Response, next: Next
                 return Send.sendConflict(res, err.message);
             case 422:
                 return Send.sendUnprocessableEntity(res, err.message);
+            case 503:
+                return Send.sendServiceUnavailable(res, err.message);
+            case 502:
+                return Send.sendBadGateway(res, err.message);
             default:
                 return Send.send(res, err.statusCode, err.message);
         }

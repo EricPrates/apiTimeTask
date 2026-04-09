@@ -3,6 +3,8 @@ import { verifyToken } from "./verifyToken";
 import { authStorage } from "../../util/authStorage";
 import { AuthContext } from "../../types/util.types";
 import { AppError } from "../../Models/AppError";
+import { AUTH } from "sqlite3";
+import { AUTH_ERRORS } from "../../util/sendMessages";
 
 
 export async function contextMiddleware(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -15,7 +17,7 @@ export async function contextMiddleware(req: Request, res: Response, next: NextF
                 const token = partsAuthHeader[1];
                 decoded = verifyToken(token);
                 if (!decoded) {
-                    throw new AppError(401, 'Token inválido');
+                    throw new AppError(401);
                 }
             }
         }
