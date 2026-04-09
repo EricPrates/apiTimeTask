@@ -1,6 +1,6 @@
 # apiTimeTask
 
-API REST para gerenciamento de tarefas e registro de tempo, construída com Node.js, TypeScript e Express. O projeto aplica arquitetura em camadas, injeção de dependência e boas práticas de Clean Code.
+API REST para gerenciamento de tarefas e registro de tempo, construída com Node.js, TypeScript e Express. Projeto de estudo para aplicação de arquitetura em camadas, injeção de dependência e boas práticas de Clean Code.
 
 ---
 
